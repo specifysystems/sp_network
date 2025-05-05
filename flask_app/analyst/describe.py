@@ -104,39 +104,39 @@ if __name__ == "__main__":
     dataset_key = "3e2d26d9-2776-4bec-bdc7-bab3842ffb6b"
     species_key = "8277078 Carcharodus alceae"
     datestr = get_current_datadate_str()
-    datestr = "2024_11_01"
+    datestr = "2025_01_01"
 
     print("**** Endpoint ****")
     svc = DescribeSvc()
     response = svc.get_endpoint()
     print(prettify_object(response))
 
-    tbs = SUMMARY.tables(datestr=datestr)
-    print(prettify_object(tbs))
+    # tbs = SUMMARY.tables(datestr=datestr)
+    # print(prettify_object(tbs))
 
     print("**** dataset_key ****")
     response = svc.get_measures(summary_type="dataset", summary_key=dataset_key)
     print(prettify_object(response))
 
-    print("**** species_key ****")
-    response = svc.get_measures(summary_type="species", summary_key=species_key)
-    print(prettify_object(response))
-
-    print("**** all datasets ****")
-    response = svc.get_measures(summary_type="dataset")
-    print(prettify_object(response))
-
-    print("**** all species ****")
-    response = svc.get_measures(summary_type="species")
-    print(prettify_object(response))
-
-    print("**** no type ****")
-    response = svc.get_measures(summary_key=dataset_key)
-    print(prettify_object(response))
-
-    print("**** wrong type ****")
-    response = svc.get_measures(summary_type="dataset", summary_key=species_key)
-    print(prettify_object(response))
+    # print("**** species_key ****")
+    # response = svc.get_measures(summary_type="species", summary_key=species_key)
+    # print(prettify_object(response))
+    #
+    # print("**** all datasets ****")
+    # response = svc.get_measures(summary_type="dataset")
+    # print(prettify_object(response))
+    #
+    # print("**** all species ****")
+    # response = svc.get_measures(summary_type="species")
+    # print(prettify_object(response))
+    #
+    # print("**** no type ****")
+    # response = svc.get_measures(summary_key=dataset_key)
+    # print(prettify_object(response))
+    #
+    # print("**** wrong type ****")
+    # response = svc.get_measures(summary_type="dataset", summary_key=species_key)
+    # print(prettify_object(response))
 """
 from flask_app.analyst.describe import *
 

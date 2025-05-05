@@ -178,7 +178,7 @@ Note that the development compose file, docker-compose.development.yml, is refer
 first on the command line.  It has elements that override those defined in the
 general compose file, docker-compose.yml::
 
-    sudo docker compose -f docker-compose.development.yml -f docker-compose.yml  up
+    sudo docker compose -f compose.development.yml -f compose.yml  up
 
 Flask has hot-reload enabled.
 

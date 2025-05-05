@@ -7,32 +7,6 @@ Letsencrypt using Certbot.  They are only valid for 90 days at a time.
 
 TODO: move administration to AWS, and script renewal if necessary
 
-Local self-signed certificates
-.........................................
-To run the containers, generate `fullchain.pem` and `privkey.pem` (certificate
-and the private key) using Let's Encrypt and link these files in `./sp_network/config/`.
-
-While in development, generate self-signed certificates then link them in
-~/git/sp_network/config/ directory for this project::
-
-  $ mkdir ~/certificates
-
-  openssl req \
-  -x509 -sha256 -nodes -newkey rsa:2048 -days 365 \
-  -keyout ~/certificates/privkey.pem \
-  -out ~/certificates/fullchain.pem
-
-  $ cd ~/git/sp_network/config
-  $ ln -s ~/certificates/privkey.pem
-  $ ln -s ~/certificates/fullchain.pem
-
-To run either the production or the development containers with HTTPS
-support, generate `fullchain.pem` and `privkey.pem` (certificate and the private
-key) using Let's Encrypt, link these files in the `./config/` directory.
-Full instructions in the docs/aws-steps.rst page, under `Set up TLS/SSL`
-
-Modify the `FQDN` environment variable in `.env.conf` as needed.
-
 TLS/SSL using Certificate Authority (CA)
 ..................................................
 
@@ -103,6 +77,16 @@ Bind-mount the letsencrypt directory
   directory (or the directory containing self-signed certificates) from the host machine
   to the container
 
+::
+
+   version: "3.9"
+   services:
+     ...
+     nginx:
+       ...
+       volumes:
+         - "/etc/letsencrypt:/etc/letsencrypt:ro"
+
 Renew Certbot SSL certificates
 .........................................
 
@@ -124,6 +108,32 @@ Test with https://broker.spcoco.org/api/v1/frontend/?occid=01493b05-4310-4f28-9d
     $ sudo docker compose stop
     $ sudo certbot renew
     $ sudo docker compose up -d
+
+Local self-signed certificates
+.........................................
+To run the containers, generate `fullchain.pem` and `privkey.pem` (certificate
+and the private key) using Let's Encrypt and link these files in `./sp_network/config/`.
+
+While in development, generate self-signed certificates then link them in
+~/git/sp_network/config/ directory for this project::
+
+  $ mkdir ~/certificates
+
+  openssl req \
+  -x509 -sha256 -nodes -newkey rsa:2048 -days 365 \
+  -keyout ~/certificates/privkey.pem \
+  -out ~/certificates/fullchain.pem
+
+  $ cd ~/git/sp_network/config
+  $ ln -s ~/certificates/privkey.pem
+  $ ln -s ~/certificates/fullchain.pem
+
+To run either the production or the development containers with HTTPS
+support, generate `fullchain.pem` and `privkey.pem` (certificate and the private
+key) using Let's Encrypt, link these files in the `./config/` directory.
+Full instructions in the docs/aws-steps.rst page, under `Set up TLS/SSL`
+
+Modify the `FQDN` environment variable in `.env.conf` as needed.
 
 
 TODO: Autorenew SSL with Certbot/LetsEncrypt
